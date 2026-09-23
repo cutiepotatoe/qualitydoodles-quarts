@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuARTS - Quality Doodles | ETE Quality Workstream</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Paho MQTT WebSockets Client -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            muted: '#8b949e',
+                            blue: '#58a6ff',
+                            accent: '#1f6feb',
+                            success: '#238636',
+                        },
+                        quartz: {
+                            light: '#a5f3fc',
+                            glow: '#38bdf8',
+                            deep: '#0284c7',
+                            dark: '#0c4a6e',
+                            crystal: '#e0f2fe'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['"Fira Code"', 'monospace'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .quartz-glow {
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+        }
+        
+        .quartz-card {
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.9) 0%, rgba(12, 74, 110, 0.2) 100%);
+            border: 1px solid #0284c7;
+        }
+
+        canvas {
+            touch-action: none;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0284c7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-quartz-deep selection:text-white">
+
+    <!-- ROLE & ROOM SELECTION MODAL -->
+    <div id="roleModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
+        <div class="bg-github-card border-2 border-quartz-glow rounded-xl max-w-md w-full p-6 text-center shadow-2xl quartz-glow">
+            <div class="w-16 h-16 mx-auto mb-3 bg-quartz-dark/50 border border-quartz-glow rounded-full flex items-center justify-center text-quartz-glow text-2xl animate-pulse">
+                <i class="fa-solid font-bold fa-gem"></i>
+            </div>
+            
+            <p class="text-xs uppercase tracking-widest text-quartz-glow font-bold mb-1">ETE Quality Workstream</p>
+            <h2 class="text-2xl font-extrabold text-white mb-2">QuARTS Quality Doodles</h2>
+            <p class="text-sm text-github-muted mb-6">Enter a Room Code to connect Player and Game Master live across devices!</p>
+
+            <div class="mb-5 text-left">
+                <label class="block text-xs font-semibold text-github-text uppercase mb-1">Room Code Session</label>
+                <input type="text" id="roomCodeInput" value="QUARTS-1" class="w-full bg-github-bg border border-github-border rounded-lg px-3 py-2 text-white font-mono text-center focus:border-quartz-glow focus:outline-none uppercase tracking-wider text-lg font-bold">
+            </div>
+
+            <div class="grid grid-cols-1 gap-3 mb-4">
+                <button onclick="selectRole('gm')" class="w-full py-3 px-4 bg-quartz-deep hover:bg-quartz-glow text-white font-semibold rounded-lg shadow-lg transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-crown text-amber-300"></i> Join as Game Master
+                </button>
+                <button onclick="selectRole('player')" class="w-full py-3 px-4 bg-github-border hover:bg-github-blue/20 text-white font-semibold border border-quartz-glow/40 rounded-lg transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-gamepad text-cyan-300"></i> Join as Player (Drawer)
+                </button>
+            </div>
+        </div>
+    <
